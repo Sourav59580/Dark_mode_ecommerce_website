@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include('cdn')%>
+    <style>
+        .side_navbar {
+            height: 100vh;
+            background: #16192A;
+        }
+
+        .display {
+            background-color: #0F111D;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li:hover {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+
+        }
+
+        @media(max-width:768px) {
+            .brand {
+                font-size: 12px;
+            }
+
+            ul {
+                margin-left: -30px;
+            }
+
+        }
+
+        .tooltip-inner {
+            background-color: deeppink !important;
+            color: white;
+        }
+
+        .bs-tooltip-left .arrow::before,
+        .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+            border-left-color: deeppink !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" id="sidebar">
+            <div class="col-2 side_navbar pt-4">
+                <div class="mb-5">
+                    <h4 style="color: #D0CFCF;" class="brand">Dashboard</h4>
+                </div>
+                <ul style="color: #D0CFCF;" class="d-flex flex-column">
+                    <li class="d-flex mb-4 list-item" data-toggle="tooltip" data-placement="left" title="Category"
+                        access-link='category'>
+                        <span><i class="fa fa-list" style="font-size:18px;"></i></span> <span
+                            class="d-none d-lg-block d-md-block ml-2">Category</span>
+                    </li>
+                    <li class="d-flex mb-4 list-item" data-toggle="tooltip" data-placement="left" title="Brand"
+                        access-link='brand'>
+                        <span><i class="fa fa-cart-plus" style="font-size:18px;"></i></span> <span
+                            class="d-none d-lg-block d-md-block ml-2">Brand</span>
+                    </li>
+                    <li class="d-flex mb-4 list-item" data-toggle="tooltip" data-placement="left" title="Product"
+                        access-link='product'>
+                        <span><i class="fa fa-product-hunt" style="font-size:18px;"></i></span> <span
+                            class="d-none d-lg-block d-md-block ml-2">Product</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-10 p-0 m-0 display">
+                <%- include('navbar') %>
+                <div class="container p-4" id="display-container">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        //dynamic page create
+        $(document).ready(function () {
+            $(".list-item").each(function () {
+                $(this).click(function () {
+                    var link = $(this).attr('access-link');
+                    if (link == 'category') {
+                        $('#display-container').html("");
+                        var row = document.createElement("DIV");
+                        row.className = "row animated fadeIn px-4";
+
+                        //col-1
+                        var col1 = document.createElement("DIV");
+                        col1.className = "col-md-4 py-2 mb-5";
+                        col1.style.backgroundColor = "#16192A";
+                        col1.style.color = "#6A889A";
+
+                        var h4 = document.createElement('h4');
+                        var text = document.createTextNode("CREATE CATEGORY");
+                        h4.appendChild(text);
+
+                        var input_area = document.createElement("DIV");
+                        input_area.id = "col1_input_area"
+                        
+                        var col1input = document.createElement("INPUT");
+                        col1input.type = "text";
+                        col1input.className = "form-control category-input mb-3 border-0 text-light";
+                        col1input.required = "required";
+                        col1input.placeholder = "Mobiles";
+                        col1input.style.backgroundColor = "#2B2E4C";
+                        input_area.append(col1input);
+
+                        var col1Button1 = document.createElement("BUTTON");
+                        col1Button1.className =
+                            "btn mb-4 border-0 text-light category_addfield_btn";
+                        col1Button1.id = 'category_add_btn'
+                        col1Button1.innerHTML = "<i class='fa fa-plus'></i> Add field";
+                        col1Button1.style.backgroundColor = "#FC4A9E";
+
+                        var col1Button2 = document.createElement("BUTTON");
+                        col1Button2.className = "btn mb-4 border-0 text-light btn-dark ml-4";
+                        col1Button2.innerHTML = "Create";
+                        //col1Button2.style.backgroundColor = "#FC4A9E";
+
+                        col1.append(h4);
+                        col1.append(input_area);
+                        col1.append(col1Button1);
+                        col1.append(col1Button2);
+                        //col-2
+                        var col2 = document.createElement("DIV");
+                        col2.className = "col-md-1";
+
+                        //col-3
+                        var col3 = document.createElement("DIV");
+                        col3.className = "col-md-7 py-2 mb-5";
+                        col3.style.backgroundColor = "#16192A";
+                        col3.style.color = "#6A889A";
+
+                        var h4 = document.createElement('h4');
+                        var text = document.createTextNode("CATEGORY LIST");
+                        h4.appendChild(text);
+
+                        var hr = document.createElement("hr");
+                        hr.style.border = "1px solid #6A889A";
+
+
+                        col3.append(h4);
+                        col3.append(hr);
+
+
+                        row.append(col1);
+                        row.append(col2);
+                        row.append(col3);
+
+                        $('#display-container').html(row);
+
+                    } else if (link == 'brand') {
+                        $('#display-container').html("");
+                        var h1 = document.createElement('h1');
+                        var text = document.createTextNode("brand");
+                        h1.appendChild(text);
+
+                        $('#display-container').html(h1);
+                    } else if (link == 'product') {
+                        $('#display-container').html("");
+                        var h1 = document.createElement('h1');
+                        var text = document.createTextNode("product");
+                        h1.appendChild(text);
+
+                        $('#display-container').html(h1);
+                    }
+
+                    //category input field create
+                    document.getElementById("category_add_btn").onclick = function () {
+                        //var parent = this.parentElement;
+                        //var input_area = parent.getElementById("col1_input_area");
+                        var input = document.createElement("INPUT");
+                        input.type = "text";
+                        input.className = "form-control category-input mb-3 border-0 text-light";
+                        input.required = "required";
+                        input.placeholder = "Mobiles";
+                        input.style.backgroundColor = "#2B2E4C";
+                        $("#col1_input_area").append(input);
+
+                    }
+                })
+            })
+
+        });
+    </script>
+</body>
+
+</html>
